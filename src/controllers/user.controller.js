@@ -56,7 +56,7 @@ router.post(
 router.post("/login", async (req, res) => {
     try{
         // checking email or mobile phone number exists or not
-        const user = await User.findOne({$or:[{email : req.body.email}, {mobile : req.body.mobile}]}).lean().exec();
+        const user = await User.findOne({$or:[{email : req.body.email}, {mobile : req.body.email}]}).lean().exec();
 
         if(user == null)
         {
