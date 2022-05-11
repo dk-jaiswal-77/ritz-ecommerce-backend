@@ -28,7 +28,7 @@ router.post(
             Promise.reject(error);
         }
     }), 
-    body("password").notEmpty().isLength({min:6, max:25}).isAlphanumeric(),  
+    body("password").notEmpty().isLength({min:6, max:25}).isStrongPassword(),  
     async(req, res) => {
         try{
             const errors = validationResult(req);
