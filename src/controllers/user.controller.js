@@ -4,7 +4,13 @@ const express = require("express");
 const router = express.Router();
 
 // express-validator
-const {body, validationResult} = require("express-validator");
+const {body, validationResult, Result} = require("express-validator");
+
+// bcrypt
+const bcrypt = require("bcrypt");
+
+// jsonwebtoken
+const jwt = require("jsonwebtoken");
 
 // importing model
 const User = require("../models/user.model");
@@ -45,6 +51,49 @@ router.post(
         }
     }
 );
+
+// post // login user
+router.post("/login", async (req, res) => {
+    try{
+        // checking email or mobile phone number exists or not
+        const user = await User.findOne({$or:[{email : req.body.email}, {mobile : req.body.mobile}]}).lean().exec();
+
+        if(user == null)
+        {
+            return res.json({status : false, msg : "invlaid email or password!"});
+        }
+
+        // email or mobile exists // comparing password 
+        const password_matched = await bcrypt.compare(req.body.password, user.password);
+        if(!password_matched)
+        {
+            // password did not match
+            return res.json({status : false, msg : "invlaid email or password!"});  
+        }
+
+        // password also matched // authentication successful // create token and send as response
+        const res_user = {
+            userId : user._id, 
+            name : user.name,
+            countryCode : user.countryCode, 
+            mobile : user.mobile, 
+            email : user.email,
+            userType : user.userType
+        }
+
+        const payload  = {
+            userId : user._id,
+            email : user.email, 
+            mobile : user.mobile
+        }
+
+        const token = jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET_KEY);
+        res.json({status : true, user : res_user, token});
+
+    }catch(error){
+        console.log(error);
+    }
+})
 
 
 // exporting router

@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     mobile : {type : Number, required : true}, 
     email : {type : String, required : true}, 
     password : {type : String, required : true}, 
-    userType : {type : String, default : "consumer"} 
+    userType : {type : String, default : "consumer"} // consumer/provider/admin
 }, {versionKey : false, timestamps : true});
 
 userSchema.pre("save", async function (next){
