@@ -27,9 +27,11 @@ app.use(express.json());
 
 // importing controllers
 const userController = require("./controllers/user.controller");
+const productController = require("./controllers/product.controller");
 
 // directing request to controller
 app.use("/user", userController);
+app.use("/products", productController);
 
 
 
