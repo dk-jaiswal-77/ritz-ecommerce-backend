@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
     rating : {type : Number, required : false, default : 0}, 
     discount : {type : Number, required : true}, 
     seller : {type : String, required : true}, 
-    occassion : {type : String, required : true}, 
+    occasion : {type : String, required : true}, 
     availability : {type : Boolean, required : false, default : true}, 
     images : {type : Map, of : Array}
     /* 
