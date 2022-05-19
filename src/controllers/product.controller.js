@@ -27,6 +27,11 @@ router.post("/getProducts", async (req, res) => {
         }
         if(req.body.material)
         {
+            // let material = [];
+            // for(let i = 0; i < req.body.material.length; i++)
+            // {
+
+            // }
             req.body.material = {$or:req.body.material};
         }
         const products = await Product.find(req.body).lean().exec();
