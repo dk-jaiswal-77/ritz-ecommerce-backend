@@ -25,15 +25,7 @@ router.post("/getProducts", async (req, res) => {
         {
             req.body.price = {$in:req.body.price};  
         }
-        if(req.body.material)
-        {
-            // let material = [];
-            // for(let i = 0; i < req.body.material.length; i++)
-            // {
-
-            // }
-            req.body.material = {$or:req.body.material};
-        }
+        
         const products = await Product.find(req.body).lean().exec();
         res.json({status : true, products});
     }catch(error)
