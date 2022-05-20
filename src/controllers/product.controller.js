@@ -23,19 +23,12 @@ router.post("/getProducts", async (req, res) => {
     try{
         if(req.body.min_price && req.body.max_price)
         {
-            let min_price = req.body.min_price;
-            let max_price = req.body.max_price;
-
-            req.body.price = {$in:[min_price, max_price]};  
-            delete req.body["min_price"];
-            delete req.body["max_price"];
+            req.body.min_price = {$gte:req.body.min_price};  
+            req.body.max_price = {$lte:req.body.max_price};  
         }
         else if(req.body.min_price)
         {
-            let min_price = req.body.min_price;
-
-            req.body.price = {$gte:min_price};
-            delete req.body["min_price"];
+            req.body.min_price = {$gte:req.body.min_pric}; 
         }
         
         const products = await Product.find(req.body).lean().exec();
