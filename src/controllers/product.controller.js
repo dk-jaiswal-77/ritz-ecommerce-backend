@@ -27,7 +27,7 @@ router.post("/getProducts", async (req, res) => {
             delete req.body["min_price"];
             delete req.body["max_price"];
         }
-        else
+        else if(req.body.min_price)
         {
             req.body.price = {$gte: req.body.min_price};
             delete req.body["min_price"];
