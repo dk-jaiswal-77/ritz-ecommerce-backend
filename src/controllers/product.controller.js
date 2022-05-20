@@ -21,6 +21,7 @@ router.post("/", async (req, res) => {
 // get products
 router.post("/getProducts", async (req, res) => {
     try{
+        // modifying for price filter
         if(req.body.min_price != undefined && req.body.max_price != undefined)
         {
             req.body.min_price = {$gte:req.body.min_price};  
@@ -30,6 +31,13 @@ router.post("/getProducts", async (req, res) => {
         {
             req.body.min_price = {$gte:req.body.min_price}; 
         }
+
+        // modifying for rating filter
+        if(req.body.rating != undefined)
+        {
+            req.body.rating = {$gte:req.body.rating};
+        }
+
         console.log(req.body);
         const products = await Product.find(req.body).lean().exec();
         res.json({status : true, products});
