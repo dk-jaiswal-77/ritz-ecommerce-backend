@@ -21,9 +21,16 @@ router.post("/", async (req, res) => {
 // get products
 router.post("/getProducts", async (req, res) => {
     try{
-        if(req.body.price)
+        if(req.body.min_price && req.body.max_price)
         {
-            req.body.price = {$in:req.body.price};  
+            req.body.price = {$in:[req.body.min_price, req.body.max_price]};  
+            delete req.body["min_price"];
+            delete req.body["max_price"];
+        }
+        else
+        {
+            req.body.price = {$gte: req.body.min_price};
+            delete req.body["min_price"];
         }
         
         const products = await Product.find(req.body).lean().exec();
