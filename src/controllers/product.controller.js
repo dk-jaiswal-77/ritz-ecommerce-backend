@@ -36,7 +36,12 @@ router.post("/getProducts", async (req, res) => {
         if(req.body.rating != undefined)
         {
             req.body.rating = {$gte:req.body.rating};
-        }
+        }  
+        // modifying for discount filter
+        if(req.body.discount != undefined)
+        {
+            req.body.discount = {$gte:req.body.discount};
+        } 
 
         console.log(req.body);
         const products = await Product.find(req.body).lean().exec();
