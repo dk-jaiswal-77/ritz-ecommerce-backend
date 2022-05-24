@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
         res.json({status : false, error});
     }
 })
+
 // get products
 router.post("/getProducts", async (req, res) => {
     try{
@@ -37,6 +38,7 @@ router.post("/getProducts", async (req, res) => {
         {
             req.body.rating = {$gte:req.body.rating};
         }  
+        
         // modifying for discount filter
         if(req.body.discount != undefined)
         {
